@@ -13,16 +13,19 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        if (savedInstanceState == null) {
-            webView.setBackgroundColor(Color.TRANSPARENT)
-            webView.loadUrl("file:///android_asset/lina_dicto/index.html")
-        } else {
-            webView.restoreState(savedInstanceState)
+        webView.apply {
+            if (savedInstanceState == null) {
+                setBackgroundColor(Color.TRANSPARENT)
+                loadUrl("file:///android_asset/lina_dicto/index.html")
+            } else {
+                restoreState(savedInstanceState)
+            }
         }
 
-        val webSettings = webView.settings
-        webSettings.javaScriptEnabled = true
-        webView.settings.allowFileAccessFromFileURLs = true
+        with (webView.settings) {
+            javaScriptEnabled = true
+            allowFileAccessFromFileURLs = true
+        }
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             WebView.setWebContentsDebuggingEnabled(true)
